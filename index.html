@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adrian Belisario - Portafolio</title>
+    <link rel="icon" type="image/png" sizes="1480x1480" href="./imagenes/imagen.png"> 
+
+    <!-- Fuentes Google Fonts: Cursive (Sacramento) y Sans-Serif (Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Sacramento&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1e332a;          /* Verde oscuro de fondo */
+            --card-bg: #4c8a5e;          /* Verde medio para contenedores */
+            --card-dark-bg: #2d4f3e;     /* Verde contenedor oscuro */
+            --nav-bg: #2b493c;           /* Verde de la barra de navegación */
+            --text-color: #e2f2e6;        /* Texto principal de la página (cambia con el tema) */
+            --text-muted: #d1e4d7;         /* Texto secundario/descripciones (cambia con el tema) */
+            --surface-text: #e2f2e6;      /* Texto fijo para tarjetas/nav/botones oscuros (NO cambia con el tema) */
+            --surface-muted: #a9c9b3;     /* Texto secundario fijo para tarjetas/superficies oscuras (NO cambia con el tema) */
+            --accent-green: #90d29d;    /* Verde claro para destacados */
+
+            /* Paleta del gradiente animado de fondo */
+            --grad-1: #3a4a1f;
+            --grad-2: #1e332a;
+            --grad-3: #16241d;
+            --grad-4: #0d2438;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: var(--bg-color);
+        }
+
+        /* Ocultar la barra de desplazamiento (Chrome, Edge, Safari) */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Ocultar la barra de desplazamiento (Firefox) */
+        html {
+            scrollbar-width: none;
+        }
+
+        /* Ocultar la barra de desplazamiento (IE/Edge legacy) */
+        body {
+            -ms-overflow-style: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+            min-height: 100vh;
+
+            /* ===== Fondo con gradiente animado ===== */
+            background-color: var(--bg-color);
+            background-image: linear-gradient(
+                120deg,
+                var(--grad-1),
+                var(--grad-2),
+                var(--grad-3),
+                var(--grad-4),
+                var(--grad-2)
+            );
+            background-size: 300% 300%;
+            animation: gradient-flow 18s ease infinite;
+        }
+
+        @keyframes gradient-flow {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body {
+                animation: none;
+            }
+        }
+
+        header {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 0 15px;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--surface-text);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            background-color: #385e4e;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 5px;
+        }
+
+        .titulo {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .theme-dot {
+            width: 26px;
+            height: 26px;
+            background-color: #385e4e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: var(--surface-text);
+            transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .theme-dot:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-dot.active {
+            background-color: var(--accent-green);
+            color: #1e332a;
+            box-shadow: 0 0 0 2px rgba(144, 210, 157, 0.35);
+        }
+
+        .main-container {
+            max-width: 900px;
+            width: 90%;
+            margin-top: 30px;
+        }
+
+        /* ===== Sistema de "páginas": solo una sección visible a la vez ===== */
+        .page {
+            display: none;
+            width: 100%;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .title-script {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3.2rem;
+            color: var(--accent-green);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .profile-frame {
+            width: 150px;
+            height: 150px;
+            border-top-left-radius: 75px;
+            border-top-right-radius: 75px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            overflow: hidden;
+            background-color: #cbbba0;
+            flex-shrink: 0;
+        }
+
+        .profile-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-bio {
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1.3;
+            color: var(--text-color);
+        }
+
+        .description-text {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+            text-align: left;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .role-card {
+            background-color: var(--card-dark-bg);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .role-card h3 {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            color: var(--surface-text);
+        }
+
+        .role-card ul {
+            list-style: none;
+        }
+
+        .role-card li {
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            color: var(--surface-muted);
+        }
+
+        .section-block {
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .wide-card {
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .tech-icon {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Caja uniforme para cada logo: evita que iconos de distintas fuentes
+           (Devicon, Simple Icons, Wikimedia) se vean con tamaños dispares */
+        .icon-chip {
+            width: 78px;
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            background-color: rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            transition: transform 0.25s ease, background-color 0.25s ease;
+        }
+
+        .icon-chip:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.13);
+        }
+
+        /* Tarjetas de Frameworks y UX/UI: forzadas a filas de 3 arriba y 2 abajo */
+        .wide-card.stacked {
+            flex-direction: column;
+            flex-wrap: nowrap;
+            padding: 28px 22px;
+            gap: 22px;
+        }
+
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+            width: 100%;
+        }
+
+        .dual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .social-icons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .social-icon-btn:hover {
+            transform: scale(1.15) translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+        }
+
+        .social-icon-btn img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* ===================== SECCIÓN CONTACTO ===================== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            align-items: start;
+        }
+
+        .contact-info {
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            padding-right: 30px;
+            text-align: left;
+        }
+
+        .contact-form-wrap {
+            text-align: left;
+        }
+
+        .contact-heading {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .contact-intro {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .contact-list li:hover .contact-icon {
+            transform: scale(1.15) translateY(-3px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+        }
+
+        .contact-icon img {
+            width: 65%;
+            height: 65%;
+            object-fit: contain;
+        }
+
+        .contact-icon--white {
+            background-color: #ffffff;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-form label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: -6px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background-color: #dbe2dc;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: #1e332a;
+            width: 100%;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .submit-btn {
+            background-color: #3f7a4d;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease;
+            margin-top: 4px;
+        }
+
+        .submit-btn:hover {
+            background-color: #366a43;
+        }
+
+        @media (max-width: 550px) {
+            .roles-grid, .dual-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .icon-row {
+                gap: 14px;
+            }
+            .icon-chip {
+                width: 60px;
+                height: 60px;
+                padding: 10px;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-info {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                padding-right: 0;
+                padding-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#sobre-mi" class="nav-link active" data-page="sobre-mi">sobre mí</a>
+            <a href="#proyectos" class="nav-link" data-page="proyectos">Proyectos</a>
+            <a href="#contacto" class="nav-link" data-page="contacto">Contacto</a>
+            <span class="theme-toggle">
+                <span class="theme-dot" id="theme-toggle-light"><i class="fa-solid fa-sun"></i></span>
+                <span class="theme-dot active" id="theme-toggle-dark"><i class="fa-solid fa-moon"></i></span>
+            </span>
+        </nav>
+    </header>
+
+    <div class="main-container">
+
+        <!-- ===================== PÁGINA: SOBRE MÍ ===================== -->
+        <section id="sobre-mi" class="page active">
+            <h1 class="title-script">Soy Adrian Belisario</h1>
+
+            <div class="profile-header">
+                <div class="profile-frame">
+                    <img src="./imagenes/yo sin fondo.png" alt="Adrian Belisario">
+                </div>
+                <div class="profile-bio">
+                    Soy un desarrollador de software, aplicaciones webs, trabajo de forma remota desde Cúcuta Colombia
+                </div>
+            </div>
+
+            <div class="description-text">
+                Durante los últimos 4 años me he dedicado a aprender y crear diversos proyectos tecnológicos como aplicaciones webs y programación de dispositivos robóticos, actualmente me dedico a la área de diseño digital, incluyendo desarrollo de aplicaciones webs informativas y funcionales.
+            </div>
+
+            <div class="description-text">
+                Hoy en dia me dedico a desarrollar proyectos personales, además, desarrollo aplicaciones webs para negocios activos con gran potencial de desarrollo para asi lograr darle mas visibilidad a clientes potenciales y asi mismo.
+            </div>
+
+            <div class="roles-grid">
+                <div class="role-card">
+                    <h3>DISEÑADOR DE INTERFAZ GRÁFICA</h3>
+                    <ul>
+                        <li>Diseño de interfaz gráfica</li>
+                        <li>Diseño UX</li>
+                        <li>Diseño UI</li>
+                        <li>Sistema de diseño</li>
+                        <li>Diseño gráfico de usuario</li>
+                    </ul>
+                </div>
+                <div class="role-card">
+                    <h3 class="titulo">CODIFICADOR</h3>
+                    <ul>
+                        <li>Desarrollo Front-end</li>
+                        <li>Desarrollo Back-end</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2 class="section-title">Lenguajes de programación manejados</h2>
+                <div class="wide-card">
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" class="tech-icon"></div>
+                    <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="tech-icon"></div>
+                </div>
+            </div>
+
+            <div class="dual-grid">
+                <div class="section-block">
+                    <h2 class="section-title">Frameworks</h2>
+                    <div class="wide-card stacked">
+                        <div class="icon-row">
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="tech-icon"></div>
+                        </div>
+                        <div class="icon-row">
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angular/angular-original.svg" alt="Angular" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" alt=".NET" class="tech-icon"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h2 class="section-title">Aplicaciones de UX y UI</h2>
+                    <div class="wide-card stacked">
+                        <div class="icon-row">
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg" alt="Canva" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg" alt="Sketch" class="tech-icon"></div>
+                        </div>
+                        <div class="icon-row">
+                            <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-original.svg" alt="Adobe XD" class="tech-icon"></div>
+                            <div class="icon-chip"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Adobe%20Indesign%20CC%202026%20icon.svg" alt="Adobe InDesign" class="tech-icon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h2 class="section-title">En otros lugares</h2>
+                <div class="social-icons-container">    
+                    <a href="mailto:adrianbelisariosd@gmail.com" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/gmail.png" alt="Gmail">
+                    </a>
+                    <a href="https://www.tiktok.com/@adrian_belisario_sd?_r=1&_t=ZS-99jcAhaYwr3" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/tiktok.png" alt="TikTok">
+                    </a>
+                    <a href="https://github.com/AdrianBelisarioSD" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/github-logo.png" alt="GitHub">
+                    </a>
+                    <a href="https://wa.me/+573045601999" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/whatsapp.png" alt="WhatsApp">
+                    </a>
+                    <a href="https://www.facebook.com/share/1R1p7hVYXe/?mibextid=wwXIfr" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/facebook.png" alt="Facebook">
+                    </a>
+                    <a href="https://www.instagram.com/adrian_belisario_sd?stkn=MTJ1dWZ0amp5emZxaA%3D%3D&utm_source=qr" class="social-icon-btn">
+                        <img src="./imagenes/Contactame iconos/instagram.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== PÁGINA: PROYECTOS ===================== -->
+        <section id="proyectos" class="page">
+            <h2 class="section-title" style="font-size:1.4rem;">Proyectos</h2>
+            <div class="description-text" style="text-align:center;">
+                Muy pronto voy a subir aquí mis proyectos destacados. ¡Vuelve pronto!
+            </div>
+        </section>
+
+        <!-- ===================== PÁGINA: CONTACTO ===================== -->
+        <section id="contacto" class="page">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 class="contact-heading">Contacto directo</h2>
+                    <p class="contact-intro">
+                        Bienvenido a mi sitio web de desarrollo de aplicaciones webs, estoy encantado de tu visita
+                    </p>
+                    <ul class="contact-list">
+                        <li>
+                            <a href="mailto:adrianbelisariosd@gmail.com" class="contact-link">
+                                <span class="contact-icon contact-icon--white">
+                                    <img src="./imagenes/Contactame iconos/gmail.png" alt="Gmail">
+                                </span>
+                                <span>Adrianbelisariosd@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/+573045601999" class="contact-link">
+                                <span class="contact-icon" style="background-color:#25D366;">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </span>
+                                <span>+57 3045601999</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/AdrianBelisarioSD" class="contact-link">
+                                <span class="contact-icon" style="background-color:#181717;">
+                                    <i class="fa-brands fa-github"></i>
+                                </span>
+                                <span>AdrianBelisarioSD</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/adrian_belisario_sd?stkn=MTJ1dWZ0amp5emZxaA%3D%3D&utm_source=qr" class="contact-link">
+                                <span class="contact-icon" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </span>
+                                <span>Adrian_Belisario_SD</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/share/1R1p7hVYXe/?mibextid=wwXIfr" class="contact-link">
+                                <span class="contact-icon" style="background-color:#1877F2;">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </span>
+                                <span>Adrian_Belisario_SD</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.tiktok.com/@adrian_belisario_sd?_r=1&_t=ZS-99jcAhaYwr3" class="contact-link">
+                                <span class="contact-icon" style="background-color:#000000;">
+                                    <i class="fa-brands fa-tiktok"></i>
+                                </span>
+                                <span>Adrian_Belisario_SD</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/adrian-belisario" class="contact-link">
+                                <span class="contact-icon" style="background-color:#0A66C2;">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </span>
+                                <span>Adrian Belisario</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contact-form-wrap">
+                    <h2 class="contact-heading">Cuentame sobre lo que necesitas</h2>
+                    <form class="contact-form">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre">
+
+                        <label for="correo">Correo electrónico</label>
+                        <input type="email" id="correo" name="correo">
+
+                        <label for="telefono">Numero telefónico</label>
+                        <input type="tel" id="telefono" name="telefono">
+
+                        <label for="tipo">Tipo de proyecto</label>
+                        <input type="text" id="tipo" name="tipo">
+
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" rows="5"></textarea>
+
+                        <button type="submit" class="submit-btn">Enviar Solicitud de Contacto</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // ---- Cambio de tema claro/oscuro ----
+        const root = document.documentElement;
+        const darkDot = document.getElementById('theme-toggle-dark');
+        const lightDot = document.getElementById('theme-toggle-light');
+
+        darkDot.addEventListener('click', () => {
+            root.style.setProperty('--bg-color', '#1e332a');
+            root.style.setProperty('--text-color', '#e2f2e6');
+            root.style.setProperty('--text-muted', '#d1e4d7');
+            root.style.setProperty('--grad-1', '#3a4a1f');
+            root.style.setProperty('--grad-2', '#1e332a');
+            root.style.setProperty('--grad-3', '#16241d');
+            root.style.setProperty('--grad-4', '#0d2438');
+            darkDot.classList.add('active');
+            lightDot.classList.remove('active');
+        });
+        lightDot.addEventListener('click', () => {
+            root.style.setProperty('--bg-color', '#f6f2e6');
+            root.style.setProperty('--text-color', '#1e332a');
+            root.style.setProperty('--text-muted', '#4d6659');
+            root.style.setProperty('--grad-1', '#eef0d2');
+            root.style.setProperty('--grad-2', '#f8f3e2');
+            root.style.setProperty('--grad-3', '#dcebd6');
+            root.style.setProperty('--grad-4', '#cfe3e4');
+            lightDot.classList.add('active');
+            darkDot.classList.remove('active');
+        });
+
+        // ---- Navegación entre "páginas" (sobre mí / Proyectos / Contacto) ----
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.toggle('active', page.id === pageId));
+            navLinks.forEach(link => link.classList.toggle('active', link.dataset.page === pageId));
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.dataset.page;
+                showPage(pageId);
+                history.replaceState(null, '', '#' + pageId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Si la URL ya trae un hash al cargar (ej. página.html#contacto), abre esa página
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+    </script>
+
+</body>
+</html>
