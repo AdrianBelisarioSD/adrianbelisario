@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adrian Belisario - Portafolio</title>
+<meta name="description" content="Adrian Belisario, desarrollador de aplicaciones web y diseñador UX/UI en Cúcuta, Colombia.">
+<meta name="theme-color" content="#0e1a15">
+<link rel="icon" type="image/png" sizes="1480x1480" href="./imagenes/imagen.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#0e1a15; --bg2:#14261e; --card:#172b22; --card2:#1d3629; --line:rgba(190,240,205,.12);
+  --text:#eaf5ec; --muted:#a7c0b0; --accent:#8be0a4; --accent-ink:#0e1a15; --coral:#e08a84; --teal:#62c4b8;
+  --chip:rgba(255,255,255,.07); --shadow:0 18px 40px -18px rgba(0,0,0,.6);
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --display:'Bricolage Grotesque',system-ui,sans-serif; --body:'Figtree',system-ui,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#f4f1e8; --bg2:#ebe7da; --card:#fffdf7; --card2:#e4eedf; --line:rgba(30,51,42,.14);
+  --text:#14261e; --muted:#4b6558; --accent:#1f6b43; --accent-ink:#fff; --coral:#c2564f; --teal:#1d8a7d;
+  --chip:rgba(20,38,30,.06); --shadow:0 18px 40px -22px rgba(30,51,42,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--body);color:var(--text);background:var(--bg);line-height:1.6;min-height:100vh;
+  background-image:radial-gradient(60rem 30rem at 85% -10%,color-mix(in srgb,var(--teal) 16%,transparent),transparent 70%),radial-gradient(45rem 28rem at -10% 20%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 70%);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--accent-ink);padding:8px 14px;border-radius:10px;z-index:99}
+.skip:focus{left:8px}
+
+/* Navegación: píldora flotante arriba en escritorio, barra inferior en móvil */
+header{position:fixed;inset:auto 0 calc(14px + env(safe-area-inset-bottom)) 0;display:flex;justify-content:center;z-index:50;padding:0 14px;pointer-events:none}
+nav{pointer-events:auto;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:color-mix(in srgb,var(--card) 82%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow)}
+.nav-link{white-space:nowrap;text-decoration:none;font-weight:600;font-size:.92rem;padding:10px 18px;border-radius:999px;color:var(--muted);transition:background .2s,color .2s}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{background:var(--accent);color:var(--accent-ink)}
+.theme-btn{width:40px;height:40px;border-radius:50%;border:0;background:var(--chip);color:var(--text);cursor:pointer;font-size:.95rem;margin-left:4px;display:grid;place-items:center;transition:transform .25s}
+.theme-btn:hover{transform:rotate(18deg)}
+@media(max-width:420px){.nav-link{padding:10px 13px;font-size:.88rem}}
+@media(min-width:760px){header{inset:18px 0 auto 0}}
+
+main{max-width:1060px;margin:0 auto;padding:30px 20px 0}
+@media(min-width:760px){main{padding-top:110px}}
+.page{display:none}
+.page.active{display:block}
+h1,h2,h3{font-family:var(--display);line-height:1.05;letter-spacing:-.02em}
+
+/* Hero: la foto en arco es el elemento memorable */
+.hero{display:grid;gap:34px;align-items:center;grid-template-columns:1fr;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.portrait{order:-1;justify-self:start;width:min(250px,62vw);aspect-ratio:4/5;border-radius:999px 999px 28px 28px;overflow:hidden;position:relative;
+  background:linear-gradient(160deg,var(--teal),color-mix(in srgb,var(--accent) 70%,#0e1a15));box-shadow:var(--shadow);border:1px solid var(--line)}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:52% 84%;transform:translateY(16%) scale(1.25)}
+.hero h1{font-size:clamp(2.6rem,9vw,5.2rem);font-weight:800;margin-bottom:18px}
+.hero h1 span{display:block;color:var(--accent)}
+.lead{font-size:clamp(1.05rem,2.6vw,1.3rem);font-weight:500;max-width:34ch;margin-bottom:20px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:.95rem;padding:14px 22px;border-radius:999px;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 24px -10px var(--accent)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{background:var(--chip)}
+@media(min-width:820px){.hero{grid-template-columns:1.25fr .75fr}.portrait{order:0;justify-self:end;width:100%;max-width:340px}}
+
+/* Bento */
+.bento{display:grid;gap:16px;margin-top:56px;grid-template-columns:1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow)}
+.card h2{font-size:1.45rem;margin-bottom:14px}
+.card p{color:var(--muted);font-size:1rem;max-width:62ch}
+.card p+p{margin-top:12px}
+.card.tint{background:var(--card2)}
+.role-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.role-list li{font-size:.9rem;font-weight:600;padding:8px 14px;border-radius:999px;background:var(--chip);border:1px solid var(--line)}
+.card h3{font-size:1.05rem;margin-bottom:12px;color:var(--accent)}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:12px}
+.icon-chip{aspect-ratio:1;display:grid;place-items:center;padding:16px;background:var(--chip);border:1px solid var(--line);border-radius:var(--r-md);transition:transform .2s,background .2s}
+.icon-chip:hover{transform:translateY(-4px);background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.tech-icon{max-width:100%;max-height:100%;object-fit:contain}
+.chips.small{grid-template-columns:repeat(auto-fill,minmax(64px,1fr))}
+.social-row{display:flex;flex-wrap:wrap;gap:12px}
+.social-icon-btn{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.social-icon-btn:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 10px 20px -8px rgba(0,0,0,.5)}
+.social-icon-btn img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+@media(min-width:760px){
+  .bento{grid-template-columns:repeat(6,1fr)}
+  .b-about{grid-column:span 4}.b-roles{grid-column:span 2}
+  .b-lang{grid-column:span 6}.b-fw{grid-column:span 3}.b-ux{grid-column:span 3}.b-social{grid-column:span 6;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .b-social h2{margin:0}
+}
+
+/* Proyectos */
+.page-head{margin-bottom:28px}
+.page-head h1{font-size:clamp(2.2rem,7vw,3.8rem);font-weight:800}
+.page-head p{color:var(--muted);margin-top:10px;max-width:50ch}
+.empty{display:grid;gap:22px;justify-items:start;padding:34px 26px}
+.empty-art{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(320px,100%)}
+.empty-art i{display:block;aspect-ratio:4/3;border-radius:14px;background:var(--chip);border:1px dashed var(--line)}
+.empty-art i:nth-child(2){background:color-mix(in srgb,var(--teal) 30%,transparent)}
+.empty-art i:nth-child(5){background:color-mix(in srgb,var(--coral) 30%,transparent)}
+
+/* Contacto */
+.contact-grid{display:grid;gap:18px}
+@media(min-width:820px){.contact-grid{grid-template-columns:.85fr 1.15fr;align-items:start}}
+.contact-list{list-style:none;display:grid;gap:6px;margin-top:6px}
+.contact-link{display:flex;align-items:center;gap:14px;text-decoration:none;padding:10px;border-radius:var(--r-md);font-weight:600;font-size:.98rem;transition:background .2s;word-break:break-word}
+.contact-link:hover{background:var(--chip)}
+.contact-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:1.05rem;flex-shrink:0;overflow:hidden}
+.contact-icon img{width:62%;height:62%;object-fit:contain}
+.contact-icon--white{background:#fff}
+form{display:grid;gap:16px}
+.field{display:grid;gap:6px}
+label{font-size:.88rem;font-weight:700}
+input,textarea{width:100%;font:inherit;font-size:1rem;color:var(--text);background:var(--bg2);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px 14px;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 28%,transparent)}
+textarea{min-height:130px;resize:vertical}
+.two{display:grid;gap:16px}
+@media(min-width:560px){.two{grid-template-columns:1fr 1fr}}
+.form-note{font-size:.88rem;color:var(--muted);min-height:1.3em}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a href="#sobre-mi" class="skip">Saltar al contenido</a>
+
+<header>
+  <nav aria-label="Principal">
+    <a href="#sobre-mi" class="nav-link active" data-page="sobre-mi">Sobre mí</a>
+    <a href="#proyectos" class="nav-link" data-page="proyectos">Proyectos</a>
+    <a href="#contacto" class="nav-link" data-page="contacto">Contacto</a>
+    <button class="theme-btn" id="theme-toggle" type="button" aria-label="Cambiar a tema claro"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+  </nav>
+</header>
+
+<main id="contenido">
+
+  <!-- ============ SOBRE MÍ ============ -->
+  <section id="sobre-mi" class="page active">
+    <div class="hero">
+      <div>
+        <h1>Soy <span>Adrian Belisario</span></h1>
+        <p class="lead">Desarrollador de software y aplicaciones web. Trabajo de forma remota desde Cúcuta, Colombia.</p>
+        <div class="cta-row">
+          <a href="#contacto" class="btn btn-primary" data-go="contacto"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Hablemos de tu proyecto</a>
+          <a href="#proyectos" class="btn btn-ghost" data-go="proyectos">Ver proyectos</a>
+        </div>
+      </div>
+      <div class="portrait">
+        <img src="./imagenes/yo sin fondo.png" alt="Adrian Belisario" fetchpriority="high">
+      </div>
+    </div>
+
+    <div class="bento">
+      <article class="card b-about">
+        <h2>Lo que hago</h2>
+        <p>Durante los últimos 4 años me he dedicado a aprender y crear proyectos tecnológicos, como aplicaciones web y programación de dispositivos robóticos. Hoy trabajo en diseño digital, incluyendo el desarrollo de aplicaciones web informativas y funcionales.</p>
+        <p>Además de mis proyectos personales, desarrollo aplicaciones web para negocios activos con gran potencial, para darles más visibilidad ante clientes potenciales.</p>
+      </article>
+
+      <article class="card tint b-roles">
+        <h3>Diseñador de interfaz gráfica</h3>
+        <ul class="role-list">
+          <li>Diseño UX</li><li>Diseño UI</li><li>Sistema de diseño</li><li>Diseño gráfico de usuario</li>
+        </ul>
+        <h3 style="margin-top:22px">Codificador</h3>
+        <ul class="role-list"><li>Front-end</li><li>Back-end</li></ul>
+      </article>
+
+      <article class="card b-lang">
+        <h2>Lenguajes de programación</h2>
+        <div class="chips">
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JS" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="tech-icon" loading="lazy"></div>
+        </div>
+      </article>
+
+      <article class="card b-fw">
+        <h2>Frameworks</h2>
+        <div class="chips small">
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angular/angular-original.svg" alt="Angular" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg" alt=".NET" class="tech-icon" loading="lazy"></div>
+        </div>
+      </article>
+
+      <article class="card b-ux">
+        <h2>Aplicaciones de UX y UI</h2>
+        <div class="chips small">
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg" alt="Canva" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg" alt="Sketch" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xd/xd-original.svg" alt="Adobe XD" class="tech-icon" loading="lazy"></div>
+          <div class="icon-chip"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Adobe%20Indesign%20CC%202026%20icon.svg" alt="Adobe InDesign" class="tech-icon" loading="lazy"></div>
+        </div>
+      </article>
+
+      <article class="card tint b-social">
+        <h2>En otros lugares</h2>
+        <div class="social-row">
+          <a href="mailto:adrianbelisariosd@gmail.com" class="social-icon-btn" aria-label="Correo"><img src="./imagenes/Contactame iconos/gmail.png" alt="Gmail"></a>
+          <a href="https://www.tiktok.com/@adrian_belisario_sd?_r=1&_t=ZS-99jcAhaYwr3" class="social-icon-btn" aria-label="TikTok" target="_blank" rel="noopener"><img src="./imagenes/Contactame iconos/tiktok.png" alt="TikTok"></a>
+          <a href="https://github.com/AdrianBelisarioSD" class="social-icon-btn" aria-label="GitHub" target="_blank" rel="noopener"><img src="./imagenes/Contactame iconos/github-logo.png" alt="GitHub"></a>
+          <a href="https://wa.me/+573045601999" class="social-icon-btn" aria-label="WhatsApp" target="_blank" rel="noopener"><img src="./imagenes/Contactame iconos/whatsapp.png" alt="WhatsApp"></a>
+          <a href="https://www.facebook.com/share/1R1p7hVYXe/?mibextid=wwXIfr" class="social-icon-btn" aria-label="Facebook" target="_blank" rel="noopener"><img src="./imagenes/Contactame iconos/facebook.png" alt="Facebook"></a>
+          <a href="https://www.instagram.com/adrian_belisario_sd?stkn=MTJ1dWZ0amp5emZxaA%3D%3D&utm_source=qr" class="social-icon-btn" aria-label="Instagram" target="_blank" rel="noopener"><img src="./imagenes/Contactame iconos/instagram.png" alt="Instagram"></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PROYECTOS ============ -->
+  <section id="proyectos" class="page">
+    <div class="page-head">
+      <h1>Proyectos</h1>
+      <p>Aquí vivirán mis trabajos destacados.</p>
+    </div>
+    <div class="card empty">
+      <div class="empty-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <h2>Muy pronto subiré mis proyectos</h2>
+      <p>Mientras tanto, puedes ver mi código en GitHub o contarme qué necesitas.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/AdrianBelisarioSD" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Ver GitHub</a>
+        <a class="btn btn-ghost" href="#contacto" data-go="contacto">Contactar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section id="contacto" class="page">
+    <div class="page-head">
+      <h1>Contacto</h1>
+      <p>Bienvenido a mi sitio de desarrollo de aplicaciones web. Estoy encantado de tu visita.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="card">
+        <h2>Contacto directo</h2>
+        <ul class="contact-list">
+          <li><a href="mailto:adrianbelisariosd@gmail.com" class="contact-link"><span class="contact-icon contact-icon--white"><img src="./imagenes/Contactame iconos/gmail.png" alt=""></span><span>Adrianbelisariosd@gmail.com</span></a></li>
+          <li><a href="https://wa.me/+573045601999" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:#25D366"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span><span>+57 3045601999</span></a></li>
+          <li><a href="https://github.com/AdrianBelisarioSD" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:#24292f"><i class="fa-brands fa-github" aria-hidden="true"></i></span><span>AdrianBelisarioSD</span></a></li>
+          <li><a href="https://www.instagram.com/adrian_belisario_sd?stkn=MTJ1dWZ0amp5emZxaA%3D%3D&utm_source=qr" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%)"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span><span>Adrian_Belisario_SD</span></a></li>
+          <li><a href="https://www.facebook.com/share/1R1p7hVYXe/?mibextid=wwXIfr" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:#1877F2"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span><span>Adrian_Belisario_SD</span></a></li>
+          <li><a href="https://www.tiktok.com/@adrian_belisario_sd?_r=1&_t=ZS-99jcAhaYwr3" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:#000"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></span><span>Adrian_Belisario_SD</span></a></li>
+          <li><a href="https://www.linkedin.com/in/adrian-belisario" class="contact-link" target="_blank" rel="noopener"><span class="contact-icon" style="background:#0A66C2"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span><span>Adrian Belisario</span></a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Cuéntame qué necesitas</h2>
+        <form id="contact-form" novalidate>
+          <div class="two">
+            <div class="field"><label for="nombre">Nombre completo</label><input type="text" id="nombre" name="nombre" autocomplete="name" required></div>
+            <div class="field"><label for="correo">Correo electrónico</label><input type="email" id="correo" name="correo" autocomplete="email" required></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="telefono">Número telefónico</label><input type="tel" id="telefono" name="telefono" autocomplete="tel"></div>
+            <div class="field"><label for="tipo">Tipo de proyecto</label><input type="text" id="tipo" name="tipo" placeholder="Ej. página web para mi negocio"></div>
+          </div>
+          <div class="field"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" rows="5" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="justify-content:center"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Enviar solicitud</button>
+          <p class="form-note" id="form-note" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ---- Tema claro/oscuro (recuerda la elección; si no hay, usa la del sistema) ----
+  const root = document.documentElement, themeBtn = document.getElementById('theme-toggle');
+  function setTheme(t){
+    root.dataset.theme = t;
+    themeBtn.innerHTML = '<i class="fa-solid ' + (t === 'dark' ? 'fa-sun' : 'fa-moon') + '" aria-hidden="true"></i>';
+    themeBtn.setAttribute('aria-label', t === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    document.querySelector('meta[name="theme-color"]').content = t === 'dark' ? '#0e1a15' : '#f4f1e8';
+  }
+  let saved = null; try { saved = localStorage.getItem('tema'); } catch(e){}
+  setTheme(saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  themeBtn.addEventListener('click', () => {
+    const t = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    setTheme(t); try { localStorage.setItem('tema', t); } catch(e){}
+  });
+
+  // ---- Navegación entre secciones ----
+  const navLinks = document.querySelectorAll('.nav-link'), pages = document.querySelectorAll('.page');
+  function showPage(id){
+    pages.forEach(p => p.classList.toggle('active', p.id === id));
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('.nav-link, [data-go]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.dataset.page || a.dataset.go;
+    showPage(id); history.replaceState(null, '', '#' + id);
+  }));
+  window.addEventListener('DOMContentLoaded', () => {
+    const h = location.hash.replace('#','');
+    if (h && document.getElementById(h) && document.getElementById(h).classList.contains('page')) showPage(h);
+  });
+
+  // ---- Formulario: abre tu correo con el mensaje listo (no hay servidor) ----
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, note = document.getElementById('form-note');
+    if (!f.nombre.value.trim() || !f.correo.value.trim() || !f.mensaje.value.trim()){
+      note.textContent = 'Completa tu nombre, correo y mensaje para continuar.'; return;
+    }
+    const body = 'Nombre: ' + f.nombre.value + '\nCorreo: ' + f.correo.value + '\nTeléfono: ' + f.telefono.value +
+                 '\nTipo de proyecto: ' + f.tipo.value + '\n\n' + f.mensaje.value;
+    location.href = 'mailto:adrianbelisariosd@gmail.com?subject=' + encodeURIComponent('Contacto desde tu portafolio: ' + f.nombre.value) + '&body=' + encodeURIComponent(body);
+    note.textContent = 'Se abrió tu aplicación de correo con el mensaje listo para enviar.';
+  });
+</script>
+</body>
+</html>
