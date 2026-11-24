@@ -432,6 +432,52 @@ button,input,textarea{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){.mk-num{--mk-n:var(--fin)}}
 .capturas figcaption{padding:12px 22px;background:var(--capa);color:var(--tenue);font-size:.92rem;border-bottom:1px solid var(--linea)}
 
+/* Cursos completados (carruseles por ruta) */
+@property --pct{syntax:'<integer>';inherits:false;initial-value:0}
+.ruta+.ruta{margin-top:clamp(48px,6vw,72px)}
+.ruta-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px}
+.ruta-cab h3{font:800 clamp(1.7rem,3.2vw,2.4rem)/1 var(--display);font-stretch:80%}
+.ruta-cab p{margin-top:6px;color:var(--tenue)}
+.ruta-flechas{display:flex;gap:8px}
+.ruta-flechas button{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;border:1.5px solid var(--linea);background:var(--capa);cursor:pointer;transition:border-color .3s,opacity .3s}
+.ruta-flechas button:hover:not(:disabled){border-color:var(--teal)}
+.ruta-flechas button:disabled{opacity:.35;cursor:default}
+.cursos{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,calc((100% - 40px) / 3.2));gap:20px;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:4px;padding:8px 4px 20px;scrollbar-width:none}
+.cursos::-webkit-scrollbar{display:none}
+.cursos .curso{display:flex;flex-direction:column;scroll-snap-align:start;border-radius:20px;background:var(--capa);border:1px solid var(--linea);overflow:hidden;transition:translate .5s var(--ease),border-color .3s,opacity .8s var(--ease) calc(var(--d,0) * 90ms),transform .8s var(--ease) calc(var(--d,0) * 90ms)}
+.curso:hover{translate:0 -6px;border-color:var(--teal)}
+.curso-arte{position:relative;display:flex;align-items:flex-end;height:120px;padding:0 18px;background:var(--arte) 0 50%/auto 100% no-repeat,linear-gradient(135deg,var(--c1),var(--c2));image-rendering:pixelated;border-bottom:3px solid color-mix(in srgb,var(--c2) 65%,#000);animation:paneo 24s ease-in-out infinite alternate}
+@keyframes paneo{to{background-position:100% 50%,0 0}}
+.curso-arte .azulejo{width:56px;height:56px;border-radius:16px;border:3px solid var(--capa);box-shadow:0 10px 20px -8px rgba(0,0,0,.55);image-rendering:auto;transform:translateY(50%);transition:transform .6s var(--ease)}
+.curso-arte .azulejo img{width:30px;height:30px}
+.curso:hover .curso-arte .azulejo{transform:translateY(50%) rotate(-8deg) scale(1.1)}
+.curso-txt{display:flex;flex:1;flex-direction:column;gap:6px;padding:40px 20px 20px}
+/* Escena en pixel art de cada curso (archivos en imagenes/cursos/) */
+.ruta:first-child .curso:nth-child(1){--arte:url(imagenes/cursos/web-1.png)}
+.ruta:first-child .curso:nth-child(2){--arte:url(imagenes/cursos/web-2.png)}
+.ruta:first-child .curso:nth-child(3){--arte:url(imagenes/cursos/web-3.png)}
+.ruta:first-child .curso:nth-child(4){--arte:url(imagenes/cursos/web-4.png)}
+.ruta:first-child .curso:nth-child(5){--arte:url(imagenes/cursos/web-5.png)}
+.ruta:first-child .curso:nth-child(6){--arte:url(imagenes/cursos/web-6.png)}
+.ruta:first-child .curso:nth-child(7){--arte:url(imagenes/cursos/web-7.png)}
+.ruta:first-child .curso:nth-child(8){--arte:url(imagenes/cursos/web-8.png)}
+.ruta:last-child .curso:nth-child(1){--arte:url(imagenes/cursos/datos-1.png)}
+.ruta:last-child .curso:nth-child(2){--arte:url(imagenes/cursos/datos-2.png)}
+.ruta:last-child .curso:nth-child(3){--arte:url(imagenes/cursos/datos-3.png)}
+.ruta:last-child .curso:nth-child(4){--arte:url(imagenes/cursos/datos-4.png)}
+.ruta:last-child .curso:nth-child(5){--arte:url(imagenes/cursos/datos-5.png)}
+.ruta:last-child .curso:nth-child(6){--arte:url(imagenes/cursos/datos-6.png)}
+.ruta:last-child .curso:nth-child(7){--arte:url(imagenes/cursos/datos-7.png)}
+.curso-txt small{color:var(--tenue);font-size:.82rem;font-weight:600}
+.curso-txt h4{font:700 1.3rem/1.15 var(--display);font-stretch:92%}
+.curso-txt p{flex:1;color:var(--tenue);font-size:.95rem;line-height:1.5}
+.curso-pie{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.nivel{padding:6px 12px;border-radius:99px;background:var(--capa2);font-size:.82rem;font-weight:600}
+.pct{--pct:100;position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:conic-gradient(var(--teal) calc(var(--pct) * 1%),var(--linea) 0);counter-reset:p var(--pct);transition:--pct 1.6s var(--ease) .35s}
+.js .curso:not(.in) .pct{--pct:0}
+.pct::before{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--capa)}
+.pct::after{content:counter(p) "%";position:relative;font-size:.7rem;font-weight:700;font-variant-numeric:tabular-nums}
+
 /* =========================================================
    Proceso
    ========================================================= */
@@ -543,9 +589,10 @@ button,input,textarea{font:inherit;color:inherit}
   .dock-item .azulejo{width:52px;height:52px}
   .dock-item .azulejo img{width:30px;height:30px}
   .dock-item span{font-size:.74rem}
-  .proy{position:relative;top:0}
-  .proy-in{transform:none;min-height:0}
-  .proy-in::after{display:none}
+  .proy-in{min-height:0;gap:22px;padding:14px 14px 26px;border-radius:26px}
+  .proy-info{padding:0 8px}
+  .proy-vis{order:-1;min-height:250px;padding:18px 14px;border-radius:18px}
+  .proy-t{margin-top:10px}
   .pasos{grid-template-columns:minmax(0,1fr);gap:36px;padding:0 0 0 52px}
   .pasos-linea{left:11px;right:auto;top:12px;bottom:var(--lb,40px);width:2px;height:auto}
   .pasos-linea::after{transform-origin:50% 0;transform:scaleY(var(--p))}
@@ -751,6 +798,173 @@ button,input,textarea{font:inherit;color:inherit}
         <li class="dock-item"><span class="azulejo"><img src="imagenes/web/sketch.webp" alt="" width="38" height="38" loading="lazy"></span><span>Sketch</span></li>
         <li class="dock-item"><span class="azulejo"><img src="imagenes/web/adobe-xd.webp" alt="" width="38" height="38" loading="lazy"></span><span>Adobe XD</span></li>
         <li class="dock-item"><span class="azulejo"><img src="imagenes/web/indesign.webp" alt="" width="38" height="38" loading="lazy"></span><span>InDesign</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CURSOS ================= -->
+<section class="seccion" id="cursos" data-nav="sobre-mi" style="padding-top:0">
+  <div class="contenedor intro-sec">
+    <h2 class="titulo revela"><span>Cursos completados</span></h2>
+    <p class="lead revela" style="--d:1">Quince cursos terminados al 100 % en Codédex, en dos rutas: desarrollo web y ciencia de datos.</p>
+  </div>
+  <div class="contenedor">
+    <div class="ruta">
+      <div class="ruta-cab">
+        <div><h3>Desarrollo web</h3><p>8 cursos terminados</p></div>
+        <div class="ruta-flechas">
+          <button type="button" aria-label="Ver cursos anteriores de Desarrollo web"><svg class="ico" aria-hidden="true" style="transform:rotate(-90deg)"><use href="#i-up"/></svg></button>
+          <button type="button" aria-label="Ver más cursos de Desarrollo web"><svg class="ico" aria-hidden="true" style="transform:rotate(90deg)"><use href="#i-up"/></svg></button>
+        </div>
+      </div>
+      <ul class="cursos" style="--c1:#5FBEB3;--c2:#2F5D8A">
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/html5-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 1</small>
+              <h4>HTML</h4>
+              <p>Mi primera página web con las bases de la web.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela" style="--d:1">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/css3-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 2</small>
+              <h4>CSS</h4>
+              <p>Selectores y propiedades para darle estilo a las páginas.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela" style="--d:2">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/javascript-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 3</small>
+              <h4>JavaScript</h4>
+              <p>Variables, bucles, funciones y eventos para crear interacción.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/bash-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 4</small>
+              <h4>Línea de comandos</h4>
+              <p>Moverme y manejar archivos desde la terminal.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/git-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 5</small>
+              <h4>Git y GitHub</h4>
+              <p>Control de versiones y trabajo en equipo con GitHub.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/javascript-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 6</small>
+              <h4>JavaScript intermedio</h4>
+              <p>Programación asíncrona con JavaScript.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/nodejs-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 7</small>
+              <h4>Node.js</h4>
+              <p>JavaScript del lado del servidor.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/react-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 8</small>
+              <h4>React</h4>
+              <p>Interfaces con componentes reutilizables.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+      </ul>
+    </div>
+    <div class="ruta">
+      <div class="ruta-cab">
+        <div><h3>Ciencia de datos</h3><p>7 cursos terminados</p></div>
+        <div class="ruta-flechas">
+          <button type="button" aria-label="Ver cursos anteriores de Ciencia de datos"><svg class="ico" aria-hidden="true" style="transform:rotate(-90deg)"><use href="#i-up"/></svg></button>
+          <button type="button" aria-label="Ver más cursos de Ciencia de datos"><svg class="ico" aria-hidden="true" style="transform:rotate(90deg)"><use href="#i-up"/></svg></button>
+        </div>
+      </div>
+      <ul class="cursos" style="--c1:#D37979;--c2:#6B4FA0">
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/python-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 1</small>
+              <h4>Python</h4>
+              <p>Variables, condicionales y bucles para empezar a programar.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela" style="--d:1">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/python-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 2</small>
+              <h4>Python intermedio</h4>
+              <p>Estructuras de datos para programas más completos.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela" style="--d:2">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/mysql-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 3</small>
+              <h4>SQL</h4>
+              <p>Bases de datos, consultas y cálculos.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/numpy-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 4</small>
+              <h4>NumPy</h4>
+              <p>Manipulación de datos numéricos con arreglos.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/pandas-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 5</small>
+              <h4>Pandas</h4>
+              <p>Análisis de datos con tablas.</p>
+              <div class="curso-pie"><span class="nivel">Principiante</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/matplotlib-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 6</small>
+              <h4>Matplotlib</h4>
+              <p>Visualización de datos con gráficos.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
+          <li class="curso revela">
+            <div class="curso-arte"><span class="azulejo"><img src="imagenes/tecnologias/scikitlearn-original.svg" alt="" width="38" height="38" loading="lazy"></span></div>
+            <div class="curso-txt">
+              <small>Curso 7</small>
+              <h4>Aprendizaje automático</h4>
+              <p>Fundamentos para crear modelos que aprenden de los datos.</p>
+              <div class="curso-pie"><span class="nivel">Intermedio</span><span class="pct" aria-hidden="true"></span><span class="sr">Completado al 100 %</span></div>
+            </div>
+          </li>
       </ul>
     </div>
   </div>
@@ -1401,7 +1615,22 @@ proys.forEach((p, k) => p.style.setProperty('--i', k));
 
 const pasosEl = $('#pasos'), pasos = $$('.paso');
 const firma = $('#firma'), firmaTxt = $('#firma span');
-const pilaActiva = () => innerWidth > 760;
+const pilaActiva = () => true;
+
+// En celular las tarjetas son más altas que la pantalla: cada una se queda
+// pegada cuando ya se ve completa, y la siguiente sube encima de ella
+let pilaAncho = 0;
+function ajustarPila(forzar) {
+  if (!forzar && innerWidth === pilaAncho) return;
+  pilaAncho = innerWidth;
+  const movil = innerWidth <= 760, alto = innerHeight;
+  proys.forEach((p, k) => {
+    p.style.top = movil ? Math.min(12 + k * 10, alto - p.offsetHeight - 92) + 'px' : '';
+  });
+}
+ajustarPila(true);
+addEventListener('resize', () => ajustarPila());
+if (window.ResizeObserver) new ResizeObserver(() => ajustarPila(true)).observe(document.querySelector('.pila'));
 const FW_MIN = 58, FW_MAX = 122;
 
 // El apellido del pie llena el ancho exacto cuando llegas al final
@@ -1517,6 +1746,21 @@ form.addEventListener('submit', e => {
 ['nombre', 'correo', 'mensaje'].forEach(n => form[n].addEventListener('input', () => {
   if (form[n].closest('.campo').classList.contains('mal')) marcar(form[n], '');
 }));
+
+/* ---------- Carruseles de cursos ---------- */
+$$('.ruta').forEach(r => {
+  const lista = $('.cursos', r), [ant, sig] = $$('.ruta-flechas button', r);
+  const paso = () => $('.curso', lista).offsetWidth + 20;
+  const estado = () => {
+    ant.disabled = lista.scrollLeft < 8;
+    sig.disabled = lista.scrollLeft + lista.clientWidth > lista.scrollWidth - 8;
+  };
+  ant.addEventListener('click', () => lista.scrollBy({ left: -paso(), behavior: reduce ? 'auto' : 'smooth' }));
+  sig.addEventListener('click', () => lista.scrollBy({ left: paso(), behavior: reduce ? 'auto' : 'smooth' }));
+  lista.addEventListener('scroll', estado, { passive: true });
+  addEventListener('resize', estado);
+  estado();
+});
 
 /* ---------- Ventanas con capturas de proyectos ---------- */
 $$('[data-modal]').forEach(b => b.addEventListener('click', () => { const d = document.getElementById(b.dataset.modal); if (d && d.showModal) d.showModal(); }));
