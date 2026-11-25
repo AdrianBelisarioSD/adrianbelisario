@@ -468,6 +468,16 @@ button,input,textarea{font:inherit;color:inherit}
 .ruta:last-child .curso:nth-child(5){--arte:url(imagenes/cursos/datos-5.png)}
 .ruta:last-child .curso:nth-child(6){--arte:url(imagenes/cursos/datos-6.png)}
 .ruta:last-child .curso:nth-child(7){--arte:url(imagenes/cursos/datos-7.png)}
+
+/* Mini apps que se pueden probar dentro de la tarjeta */
+.demo-marco{width:100%;max-width:480px;border-radius:16px;overflow:hidden;border:1px solid var(--linea);background:var(--capa);box-shadow:var(--sombra)}
+.demo-barra{display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;background:var(--capa2);color:var(--tenue);font-size:.74rem;font-weight:600}
+.demo-barra i{width:9px;height:9px;border-radius:50%;background:var(--logo-rosa)}
+.demo-barra i:nth-child(2){background:#D9C27A}.demo-barra i:nth-child(3){background:var(--logo-teal)}
+.demo-barra span{margin-left:8px}
+.demo{display:block;width:100%;height:340px;border:0;background:var(--fondo)}
+body:has(.demo:hover) .yo{opacity:0}
+@media (max-width:760px){.demo{height:330px}}
 .curso-txt small{color:var(--tenue);font-size:.82rem;font-weight:600}
 .curso-txt h4{font:700 1.3rem/1.15 var(--display);font-stretch:92%}
 .curso-txt p{flex:1;color:var(--tenue);font-size:.95rem;line-height:1.5}
@@ -567,10 +577,11 @@ button,input,textarea{font:inherit;color:inherit}
   @keyframes nav-sube{from{opacity:0;transform:translate(-50%,24px)}}
   .nav-logo{display:none}
   .nav-links{flex:1}
-  .nav-links a{flex:1;flex-direction:column;justify-content:center;gap:3px;padding:6px 2px;min-height:54px;font-size:.7rem;border-radius:22px}
+  .nav-links a{flex:1;flex-direction:column;justify-content:center;gap:3px;padding:6px 0;min-width:0;min-height:54px;font-size:.66rem;letter-spacing:-.01em;border-radius:20px}
   .nav-links a .ico{display:block;width:20px;height:20px}
   .nav-ind{border-radius:22px}
-  .nav-tema{width:54px;height:54px}
+  .nav-tema{flex-shrink:0;width:50px;height:50px}
+  @media (max-width:350px){.nav-links a{font-size:.58rem}.nav-links a .ico{width:18px;height:18px}.nav{padding:5px}.nav-tema{width:44px;height:44px}}
   .hero{min-height:auto;padding:56px 16px 40px}
   .marco{padding:26px 18px 30px}
   .etq{font-size:.72rem;padding:8px 11px;gap:6px}
@@ -646,6 +657,7 @@ button,input,textarea{font:inherit;color:inherit}
   <div class="nav-links">
     <span class="nav-ind" aria-hidden="true"></span>
     <a href="#sobre-mi" data-nav="sobre-mi"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Sobre mí</span></a>
+    <a href="#cursos" data-nav="cursos"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg><span>Cursos</span></a>
     <a href="#proyectos" data-nav="proyectos"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg><span>Proyectos</span></a>
     <a href="#proceso" data-nav="proceso"><svg class="ico" aria-hidden="true"><use href="#i-route"/></svg><span>Proceso</span></a>
     <a href="#contacto" data-nav="contacto"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg><span>Contacto</span></a>
@@ -804,7 +816,7 @@ button,input,textarea{font:inherit;color:inherit}
 </section>
 
 <!-- ================= CURSOS ================= -->
-<section class="seccion" id="cursos" data-nav="sobre-mi" style="padding-top:0">
+<section class="seccion" id="cursos" data-nav="cursos" style="padding-top:0">
   <div class="contenedor intro-sec">
     <h2 class="titulo revela"><span>Cursos completados</span></h2>
     <p class="lead revela" style="--d:1">Quince cursos terminados al 100 % en Codédex, en dos rutas: desarrollo web y ciencia de datos.</p>
@@ -1094,6 +1106,60 @@ button,input,textarea{font:inherit;color:inherit}
     </article>
 
   
+
+    <article class="proy">
+      <div class="proy-in">
+        <div class="proy-info">
+          <p class="estado">Publicado</p>
+          <h3 class="proy-t">Lista de tareas</h3>
+          <p class="proy-d">Una app para organizar pendientes: agregas tareas, las marcas como hechas y las filtras. Se guardan en el navegador aunque cierres la página.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>localStorage</li></ul>
+          <a class="enlace" href="proyectos/tareas/index.html" target="_blank" rel="noopener">Abrir en pantalla completa<svg class="ico" aria-hidden="true"><use href="#i-ext"/></svg></a>
+        </div>
+        <div class="proy-vis">
+          <div class="demo-marco">
+            <div class="demo-barra" aria-hidden="true"><i></i><i></i><i></i><span>Pruébala aquí</span></div>
+            <iframe class="demo" src="proyectos/tareas/index.html" title="Lista de tareas funcionando" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="proy">
+      <div class="proy-in">
+        <div class="proy-info">
+          <p class="estado">Publicado</p>
+          <h3 class="proy-t">Calculadora</h3>
+          <p class="proy-d">Suma, resta, multiplica, divide y saca porcentajes, también desde el teclado. Hace los cálculos con un analizador propio, sin usar eval.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+          <a class="enlace" href="proyectos/calculadora/index.html" target="_blank" rel="noopener">Abrir en pantalla completa<svg class="ico" aria-hidden="true"><use href="#i-ext"/></svg></a>
+        </div>
+        <div class="proy-vis">
+          <div class="demo-marco">
+            <div class="demo-barra" aria-hidden="true"><i></i><i></i><i></i><span>Pruébala aquí</span></div>
+            <iframe class="demo" src="proyectos/calculadora/index.html" title="Calculadora funcionando" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="proy">
+      <div class="proy-in">
+        <div class="proy-info">
+          <p class="estado">Publicado</p>
+          <h3 class="proy-t">Generador de paletas</h3>
+          <p class="proy-d">Crea paletas de cinco colores que combinan entre sí. Bloqueas los que te gustan, generas otra vez y copias el código de cada color con un clic.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Teoría del color</li></ul>
+          <a class="enlace" href="proyectos/paletas/index.html" target="_blank" rel="noopener">Abrir en pantalla completa<svg class="ico" aria-hidden="true"><use href="#i-ext"/></svg></a>
+        </div>
+        <div class="proy-vis">
+          <div class="demo-marco">
+            <div class="demo-barra" aria-hidden="true"><i></i><i></i><i></i><span>Pruébala aquí</span></div>
+            <iframe class="demo" src="proyectos/paletas/index.html" title="Generador de paletas funcionando" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </article>
 
     <article class="proy" style="--i:3">
       <div class="proy-in">

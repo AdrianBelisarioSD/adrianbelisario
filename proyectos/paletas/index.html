@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generador de paletas | Adrian Belisario</title>
+<link rel="icon" type="image/png" href="../../imagenes/web/logo-64.png">
+<script>try{var t=localStorage.getItem('tema');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+@font-face{font-family:"Anybody";src:url("../../fuentes/anybody.woff2") format("woff2");font-weight:100 900;font-stretch:50% 150%;font-display:swap}
+@font-face{font-family:"Instrument Sans";src:url("../../fuentes/instrument-sans.woff2") format("woff2");font-weight:400 700;font-display:swap}
+[data-theme=dark]{--fondo:#12221C;--capa:#1A2E26;--capa2:#243A31;--texto:#E7F0EB;--tenue:#9CB4A9;--linea:rgba(231,240,235,.12);--teal:#5FBEB3;--sobre-teal:#0C1C17;color-scheme:dark}
+[data-theme=light]{--fondo:#EDF1EE;--capa:#FFFFFF;--capa2:#DCE6E0;--texto:#12221C;--tenue:#4A6359;--linea:rgba(18,34,28,.14);--teal:#17786E;--sobre-teal:#FFFFFF;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{display:grid;grid-template-rows:auto 1fr;gap:10px;padding:14px;font:600 15px/1.3 "Instrument Sans",system-ui,sans-serif;color:var(--texto);background:var(--fondo);transition:background-color .4s,color .4s}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.volver{display:none;justify-self:start;color:var(--tenue);font-size:.9rem;text-decoration:none;border-bottom:1px solid var(--linea)}
+.suelta{max-width:900px;margin:0 auto;padding-top:40px;grid-template-rows:auto auto 1fr}
+.suelta .volver{display:inline-block}
+.cab{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font:800 1.45rem/1 "Anybody",sans-serif;font-stretch:78%}
+.cab p{color:var(--tenue);font-size:.8rem;font-weight:500}
+#generar{flex-shrink:0;height:40px;padding:0 16px;border:0;border-radius:12px;background:var(--teal);color:var(--sobre-teal);font-weight:700;cursor:pointer;transition:transform .15s}
+#generar:active{transform:scale(.95)}
+.paleta{display:flex;gap:6px;min-height:160px}
+.color{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;padding:10px 4px;border-radius:14px;background:var(--c);color:var(--t);transition:background-color .6s cubic-bezier(.22,1,.36,1),color .6s,flex-grow .4s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i) * 50ms)}
+.color:hover{flex-grow:1.35}
+.color button{border:0;background:none;color:inherit;cursor:pointer;border-radius:8px}
+.hexa{padding:4px 6px;font-size:clamp(.62rem,2.6vw,.85rem);font-weight:700;letter-spacing:.02em}
+.hexa:hover{background:rgba(127,127,127,.2)}
+.candado{display:grid;place-items:center;width:32px;height:32px;opacity:.55;transition:opacity .2s}
+.color:hover .candado,.candado[aria-pressed=true]{opacity:1}
+.candado svg{width:16px;height:16px}
+.candado .abierto{display:block}.candado .cerrado{display:none}
+.candado[aria-pressed=true] .abierto{display:none}.candado[aria-pressed=true] .cerrado{display:block}
+.aviso{position:fixed;left:50%;bottom:16px;padding:8px 14px;border-radius:10px;background:var(--texto);color:var(--fondo);font-size:.85rem;opacity:0;transform:translate(-50%,10px);transition:opacity .3s,transform .3s;pointer-events:none}
+.aviso.ver{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="volver" href="../../index.html#proyectos">Volver al portafolio</a>
+<div class="cab">
+  <div><h1>Generador de paletas</h1><p>Toca un código para copiarlo. Bloquea los que te gusten.</p></div>
+  <button id="generar" type="button">Generar</button>
+</div>
+<div class="paleta" id="paleta"></div>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  if (window.top === window) document.body.classList.add('suelta');
+  const paleta = document.getElementById('paleta'), aviso = document.getElementById('aviso');
+  const candadoSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path class="abierto" d="M8 11V7a4 4 0 0 1 7.5-2"/><path class="cerrado" d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  const colores = [];
+  for (let i = 0; i < 5; i++) {
+    const d = document.createElement('div'); d.className = 'color'; d.style.setProperty('--i', i);
+    d.innerHTML = `<button class="candado" type="button" aria-pressed="false" aria-label="Bloquear color ${i + 1}">${candadoSVG}</button><button class="hexa" type="button"></button>`;
+    paleta.append(d); colores.push({ el: d, hex: '#000000', fijo: false });
+  }
+
+  const hslHex = (h, s, l) => {
+    s /= 100; l /= 100;
+    const f = n => { const k = (n + h / 30) % 12, a = s * Math.min(l, 1 - l); return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, '0'); };
+    return ('#' + f(0) + f(8) + f(4)).toUpperCase();
+  };
+  const textoPara = hex => {
+    const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(c => c <= .03928 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
+    return .2126 * r + .7152 * g + .0722 * b > .32 ? '#14201B' : '#FFFFFF';
+  };
+  const azar = (a, b) => a + Math.random() * (b - a);
+
+  // Esquemas de color que combinan: análogo, complementario, triádico y monocromático
+  function generar() {
+    const base = Math.random() * 360;
+    const esquema = ['analogo', 'complementario', 'triadico', 'mono'][Math.floor(Math.random() * 4)];
+    const tonos = {
+      analogo: [-40, -20, 0, 20, 40],
+      complementario: [0, 15, 180, 195, 0],
+      triadico: [0, 120, 240, 0, 120],
+      mono: [0, 0, 0, 0, 0]
+    }[esquema];
+    const luces = [22, 38, 55, 70, 86].sort(() => Math.random() - .5);
+    colores.forEach((c, i) => {
+      if (c.fijo) return;
+      const h = (base + tonos[i] + 360) % 360;
+      c.hex = hslHex(h, azar(esquema === 'mono' ? 35 : 45, 80), esquema === 'mono' ? [20, 36, 52, 68, 84][i] : luces[i]);
+      c.el.style.setProperty('--c', c.hex); c.el.style.setProperty('--t', textoPara(c.hex));
+      const b = c.el.querySelector('.hexa'); b.textContent = c.hex; b.setAttribute('aria-label', 'Copiar ' + c.hex);
+    });
+  }
+
+  let tAviso;
+  const avisar = m => { aviso.textContent = m; aviso.classList.add('ver'); clearTimeout(tAviso); tAviso = setTimeout(() => aviso.classList.remove('ver'), 1400); };
+  paleta.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const c = colores.find(x => x.el.contains(b));
+    if (b.classList.contains('candado')) { c.fijo = !c.fijo; b.setAttribute('aria-pressed', c.fijo); return; }
+    const copiar = navigator.clipboard ? navigator.clipboard.writeText(c.hex) : Promise.reject();
+    copiar.then(() => avisar('Copiado ' + c.hex)).catch(() => avisar(c.hex));
+  });
+  document.getElementById('generar').addEventListener('click', generar);
+  addEventListener('keydown', e => { if (e.code === 'Space' && !e.target.closest('button')) { e.preventDefault(); generar(); } });
+  addEventListener('storage', e => { if (e.key === 'tema' && e.newValue) document.documentElement.dataset.theme = e.newValue; });
+  generar();
+})();
+</script>
+</body>
+</html>
