@@ -66,6 +66,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--fondo);scroll-padding-top:96px;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+html,body{overflow-x:clip}
 body{font-family:var(--cuerpo);font-size:1.0625rem;line-height:1.6;color:var(--texto);background:var(--fondo);overflow-x:clip;-webkit-font-smoothing:antialiased;transition:background-color .5s,color .5s}
 img,svg{display:block;max-width:100%}
 a{color:inherit}
@@ -168,7 +169,7 @@ button,input,textarea{font:inherit;color:inherit}
 /* Retrato: tu logo convertido en marco */
 .foto{--mx:0;--my:0;position:relative}
 .tabs{position:relative;display:inline-flex;padding:4px;margin-bottom:14px;border-radius:999px;background:var(--capa);border:1px solid var(--linea)}
-.tab{position:relative;z-index:1;min-height:40px;padding:0 18px;border:0;border-radius:999px;background:none;color:var(--tenue);font-weight:600;font-size:.92rem;cursor:pointer;transition:color .3s}
+.tab{position:relative;z-index:1;min-height:44px;padding:0 18px;border:0;border-radius:999px;background:none;color:var(--tenue);font-weight:600;font-size:.92rem;cursor:pointer;transition:color .3s}
 .tab[aria-selected=true]{color:var(--texto)}
 .tabs-ind{position:absolute;top:4px;bottom:4px;left:0;width:var(--tw,0px);transform:translateX(var(--tx,0px));border-radius:999px;background:var(--capa2);transition:transform .5s var(--ease),width .5s var(--ease)}
 .vista{display:grid;aspect-ratio:1/1.04}
@@ -376,8 +377,8 @@ button,input,textarea{font:inherit;color:inherit}
 .modal::backdrop{background:rgba(8,16,13,.7);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 @keyframes modal-abre{from{opacity:0;transform:translateY(24px) scale(.97)}}
 .modal-cab{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 14px 14px 22px;border-bottom:1px solid var(--linea)}
-.modal-cab h4{font:700 1.15rem/1.2 var(--display);font-stretch:92%}
-.modal-cerrar{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--linea);background:none;cursor:pointer;font-size:1.4rem;line-height:1}
+.modal-cab h4{min-width:0;font:700 1.15rem/1.2 var(--display);font-stretch:92%;text-wrap:balance}
+.modal-cerrar{flex-shrink:0;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--linea);background:none;cursor:pointer;font-size:1.4rem;line-height:1}
 .modal-cerrar:hover{border-color:var(--teal)}
 .modal-cuerpo{overflow:auto;max-height:calc(100vh - 140px);background:#ECEFF1}
 .modal-cuerpo img{width:100%;height:auto}
@@ -507,6 +508,7 @@ body:has(.demo:hover) .yo{opacity:0}
    ========================================================= */
 .contacto-titulo{font:800 clamp(2.8rem,8.4vw,7.4rem)/.9 var(--display);font-stretch:var(--cs,62%);letter-spacing:-.01em;max-width:13ch;transition:font-stretch 1.4s var(--ease-io)}
 .contacto-titulo.in{--cs:100%}
+@media (max-width:480px){.contacto-titulo{font-size:clamp(2.3rem,11.2vw,2.8rem)}.contacto-titulo.in{--cs:86%}}
 .contacto-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,5vw,72px);margin-top:clamp(40px,6vw,64px);align-items:start}
 .vias{display:grid;gap:14px}
 .via{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:22px;background:var(--capa);border:1px solid var(--linea);text-decoration:none;transition:border-color .3s,transform .5s var(--ease)}
@@ -1221,7 +1223,7 @@ body:has(.demo:hover) .yo{opacity:0}
           </a>
           <a class="via" href="mailto:adrianbelisariosd@gmail.com">
             <span class="via-ico" style="background:#D85140"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></span>
-            <span><b>Correo</b><small>adrianbelisariosd@gmail.com</small></span>
+            <span><b>Correo</b><small>adrianbelisariosd@<wbr>gmail.com</small></span>
           </a>
         </div>
         <ul class="redes" aria-label="Redes sociales">
@@ -1267,7 +1269,7 @@ body:has(.demo:hover) .yo{opacity:0}
 </footer>
 
 <dialog class="modal" id="modal-mekatario" aria-labelledby="modal-mek-t">
-  <div class="modal-cab"><h4 id="modal-mek-t">Mekatario: capturas del sistema</h4><button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar">×</button></div>
+  <div class="modal-cab"><h4 id="modal-mek-t">Capturas de Mekatario</h4><button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar">×</button></div>
   <div class="modal-cuerpo capturas">
     <figure><img src="imagenes/proyectos/mekatario-panel.webp" alt="Panel de información con totales, alertas, calendario y gráfico de movimientos del mes" width="1600" height="807" loading="lazy"><figcaption>Panel de información: totales, alertas de stock y vencimientos, y movimientos del mes.</figcaption></figure>
     <figure><img src="imagenes/proyectos/mekatario-inventario.webp" alt="Inventario con productos vencidos, próximos a vencer, en descuento y tabla de productos" width="1600" height="815" loading="lazy"><figcaption>Inventario: productos vencidos, próximos a vencer y en descuento, con filtros por fecha.</figcaption></figure>
@@ -1277,7 +1279,7 @@ body:has(.demo:hover) .yo{opacity:0}
 </dialog>
 
 <dialog class="modal" id="modal-walle" aria-labelledby="modal-walle-t">
-  <div class="modal-cab"><h4 id="modal-walle-t">WALL-E: bloques en MakeCode</h4><button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar">×</button></div>
+  <div class="modal-cab"><h4 id="modal-walle-t">Bloques de WALL-E</h4><button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar">×</button></div>
   <div class="modal-cuerpo"><img src="imagenes/proyectos/wall-e-bloques.webp" alt="Programa en bloques de MakeCode: al iniciar muestra WALL-E; con los botones del control infrarrojo cambia de modo; en el bucle, si la distancia ultrasónica supera 9 cm avanza con luz verde y si no gira con luz roja." width="827" height="703" loading="lazy"></div>
   <p class="modal-nota">El botón Poder activa el modo que gira a la izquierda, Luz el que gira a la derecha y el 6 lo detiene mostrando una X en los LEDs.</p>
 </dialog>
